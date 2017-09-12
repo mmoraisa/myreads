@@ -12,24 +12,40 @@ class BooksApp extends React.Component {
   componentDidMount = () => {
     BooksAPI.getAll().then(books => {
         this.setState({
-            books: books
+          books: books
         })
     })
   }
   handleShelfChange = (e,book) => {
     const shelf = e.target.value;
     const books = this.state.books;
-    books.every((currentBook,i) => {
-        if(currentBook.id === book.id){
-            books[i].shelf = shelf
-            return false;
-        }
-        else return true;
+
+    let foundIndex = null;
+
+    books.forEach((currentBook,index) => {
+      if(currentBook.id === book.id)
+        foundIndex = index
     })
+
+    if(foundIndex !== null){
+      books[foundIndex].shelf = shelf
+    }
+    else{
+      BooksAPI.update(book,shelf)
+        .then(data => { this.addNewBook(book) })
+    }
+
     this.setState({
-        books: books
+      books: books
     })
     BooksAPI.update(book,shelf);
+  }
+  addNewBook = (book) => {
+    BooksAPI.get(book.id).then(book => {
+      this.setState({
+        books: this.state.books.concat([ book ])
+      })
+    })
   }
   render() {
     return (

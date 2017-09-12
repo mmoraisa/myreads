@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Bookshelf from './Bookshelf'
-import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component{
     render() {
@@ -21,6 +20,8 @@ class ListBooks extends Component{
                     break;
                 case 'read':
                     readBooks.push(book);
+                    break;
+                default:
                     break;
             }
         });

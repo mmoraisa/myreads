@@ -6,7 +6,7 @@ class Book extends Component{
         const { handleShelfChange } = this.props
 
         return (
-            <div className="book">
+            <li className="book">
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${imageLinks.thumbnail})` }}></div>
                     <div className="book-shelf-changer">
@@ -21,7 +21,7 @@ class Book extends Component{
                 </div>
                 <div className="book-title">{title}</div>
                 <div className="book-authors">{authors}</div>
-            </div>
+            </li>
         )
     }
 }

@@ -4,7 +4,7 @@ import sortBy from 'sort-by'
 
 class Bookshelf extends Component{
     render() {
-        const { name, status, books, handleShelfChange} = this.props;
+        const { name, books, handleShelfChange} = this.props;
 
         const showingBooks = books.sort(sortBy('name'))
 
@@ -14,11 +14,9 @@ class Bookshelf extends Component{
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {showingBooks.map(book => (
-                            <li key={book.id}>
-                                <Book book={book} handleShelfChange={(e) => {
-                                    handleShelfChange(e,book)
-                                }}/>
-                            </li>
+                            <Book key={book.id} book={book} handleShelfChange={(e) => {
+                                handleShelfChange(e,book)
+                            }}/>
                         ))}
                     </ol>
                 </div>
