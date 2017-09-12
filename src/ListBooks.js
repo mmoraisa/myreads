@@ -4,35 +4,14 @@ import Bookshelf from './Bookshelf'
 import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component{
-    state = {
-        books: []
-    }
-    componentDidMount = () => {
-        BooksAPI.getAll().then(books => {
-            this.setState({
-                books: books
-            })
-        })
-    }
-    handleShelfChange = (e,book) => {
-        const books = this.state.books;
-        books.every((currentBook,i) => {
-            if(currentBook.id == book.id){
-                books[i].shelf = e.target.value
-                return false;
-            }
-            else return true;
-        })
-        this.setState({
-            books: books
-        })
-    }
     render() {
-        const currentlyReadingBooks = [];
-        const wantToReadBooks = [];
-        const readBooks = [];
+        const { handleShelfChange, books } = this.props
+        
+        const currentlyReadingBooks = []
+        const wantToReadBooks = []
+        const readBooks = []
 
-        this.state.books.forEach(book => {
+        books.forEach(book => {
             switch(book.shelf){
                 case 'currentlyReading':
                     currentlyReadingBooks.push(book);
@@ -53,9 +32,9 @@ class ListBooks extends Component{
                 </div>
                 <div className="list-books-content">
                     <div>
-                        <Bookshelf name="Currently Reading" books={currentlyReadingBooks} handleShelfChange={this.handleShelfChange} status="currentlyReading"/>
-                        <Bookshelf name="Want to Read" books={wantToReadBooks} handleShelfChange={this.handleShelfChange} status="wantToRead"/>
-                        <Bookshelf name="Read" books={readBooks} handleShelfChange={this.handleShelfChange} status="read"/>
+                        <Bookshelf name="Currently Reading" books={currentlyReadingBooks} handleShelfChange={handleShelfChange} status="currentlyReading"/>
+                        <Bookshelf name="Want to Read" books={wantToReadBooks} handleShelfChange={handleShelfChange} status="wantToRead"/>
+                        <Bookshelf name="Read" books={readBooks} handleShelfChange={handleShelfChange} status="read"/>
                     </div>
                 </div>
                 <div className="open-search">
