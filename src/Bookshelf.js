@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
 import Book from './Book'
+import sortBy from 'sort-by'
 
 class Bookshelf extends Component{
     render() {
         const { name, status, books, handleShelfChange} = this.props;
+
+        const showingBooks = books.sort(sortBy('name'))
+
         return (
             <div className="bookshelf">
                 {name && (<h2 className="bookshelf-title">{name}</h2>)}
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                        {books.map(book => (
+                        {showingBooks.map(book => (
                             <li key={book.id}>
                                 <Book book={book} handleShelfChange={(e) => {
                                     handleShelfChange(e,book)

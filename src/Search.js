@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Bookshelf from './Bookshelf'
+import escapeRegExp from 'escape-string-regexp'
+import sortBy from 'sort-by'
 
 class Search extends Component{
     state = {
@@ -12,8 +14,17 @@ class Search extends Component{
         })
     }
     render() {
-
         const { handleShelfChange, books } = this.props
+
+        let showingBooks;
+        if(this.state.query){
+            const match = new RegExp(escapeRegExp(this.state.query), 'i')
+            showingBooks = books.filter(book => match.test(book.title))
+        } else {
+            showingBooks = books;
+        }
+
+        showingBooks.sort(sortBy('name'))
 
         return (
             <div className="search">
@@ -33,7 +44,7 @@ class Search extends Component{
                         </div>
                     </div>
                     <div className="search-books-results">
-                        <Bookshelf books={books} handleShelfChange={handleShelfChange} status="none"/>
+                        <Bookshelf books={showingBooks} handleShelfChange={handleShelfChange} status="none"/>
                     </div>
                 </div>
             </div>
