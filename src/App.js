@@ -42,6 +42,7 @@ class BooksApp extends React.Component {
   }
   addNewBook = (book) => {
     BooksAPI.get(book.id).then(book => {
+      console.log(this.state.books,book)
       this.setState({
         books: this.state.books.concat([ book ])
       })

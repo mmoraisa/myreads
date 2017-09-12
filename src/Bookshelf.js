@@ -14,7 +14,7 @@ class Bookshelf extends Component{
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {showingBooks.map(book => (
-                            <Book key={book.id} book={book} handleShelfChange={(e) => {
+                            <Book key={Math.random().toString(36).substr(-8) + book.id} book={book} handleShelfChange={(e) => {
                                 handleShelfChange(e,book)
                             }}/>
                         ))}
