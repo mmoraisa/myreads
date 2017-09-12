@@ -1,23 +1,51 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Bookshelf from './Bookshelf'
+import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component{
-    render() {
-        const books = [
-            {
-                id: 1,
-                title: '1776',
-                authors: 'David McCullough',
-                image: 'http://books.google.com/books/content?id=uu1mC6zWNTwC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73pGHfBNSsJG9Y8kRBpmLUft9O4BfItHioHolWNKOdLavw-SLcXADy3CPAfJ0_qMb18RmCa7Ds1cTdpM3dxAGJs8zfCfm8c6ggBIjzKT7XR5FIB53HHOhnsT7a0Cc-PpneWq9zX&source=gbs_api'
-            },
-            {
-                id: 2,
-                title: 'Harry Potter and the Sorcerer\'s Stone',
-                authors: 'J.K. Rowling',
-                image: 'http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72G3gA5A-Ka8XjOZGDFLAoUeMQBqZ9y-LCspZ2dzJTugcOcJ4C7FP0tDA8s1h9f480ISXuvYhA_ZpdvRArUL-mZyD4WW7CHyEqHYq9D3kGnrZCNiqxSRhry8TiFDCMWP61ujflB&source=gbs_api'
+    state = {
+        books: []
+    }
+    componentDidMount = () => {
+        BooksAPI.getAll().then(books => {
+            this.setState({
+                books: books
+            })
+        })
+    }
+    handleShelfChange = (e,book) => {
+        const books = this.state.books;
+        books.every((currentBook,i) => {
+            if(currentBook.id == book.id){
+                books[i].shelf = e.target.value
+                return false;
             }
-        ];
+            else return true;
+        })
+        this.setState({
+            books: books
+        })
+    }
+    render() {
+        const currentlyReadingBooks = [];
+        const wantToReadBooks = [];
+        const readBooks = [];
+
+        this.state.books.forEach(book => {
+            switch(book.shelf){
+                case 'currentlyReading':
+                    currentlyReadingBooks.push(book);
+                    break;
+                case 'wantToRead':
+                    wantToReadBooks.push(book);
+                    break;
+                case 'read':
+                    readBooks.push(book);
+                    break;
+            }
+        });
+
         return (
             <div className="list-books">
                 <div className="list-books-title">
@@ -25,9 +53,9 @@ class ListBooks extends Component{
                 </div>
                 <div className="list-books-content">
                     <div>
-                        <Bookshelf name="Currently Reading" books={books} status="currentlyReading"/>
-                        <Bookshelf name="Want to Read" books={books} status="wantToRead"/>
-                        <Bookshelf name="Read" books={books} status="read"/>
+                        <Bookshelf name="Currently Reading" books={currentlyReadingBooks} handleShelfChange={this.handleShelfChange} status="currentlyReading"/>
+                        <Bookshelf name="Want to Read" books={wantToReadBooks} handleShelfChange={this.handleShelfChange} status="wantToRead"/>
+                        <Bookshelf name="Read" books={readBooks} handleShelfChange={this.handleShelfChange} status="read"/>
                     </div>
                 </div>
                 <div className="open-search">
