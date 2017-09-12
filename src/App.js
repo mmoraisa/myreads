@@ -32,23 +32,13 @@ class BooksApp extends React.Component {
     BooksAPI.update(book,shelf);
   }
   render() {
-    const categorizedBooks = [];
-    const uncategorizedBooks = [];
-
-    this.state.books.forEach(book => {
-      if(book.shelf !== 'none')
-        categorizedBooks.push(book);
-      else
-        uncategorizedBooks.push(book);
-    })
-
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <ListBooks books={categorizedBooks} handleShelfChange={this.handleShelfChange}/>
+          <ListBooks books={this.state.books} handleShelfChange={this.handleShelfChange}/>
         )}/>
         <Route exact path="/search" render={() => (
-          <Search books={uncategorizedBooks} handleShelfChange={this.handleShelfChange}/>
+          <Search books={this.state.books} handleShelfChange={this.handleShelfChange}/>
         )}/>
       </div>
     )
