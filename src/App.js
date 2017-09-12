@@ -17,10 +17,11 @@ class BooksApp extends React.Component {
     })
   }
   handleShelfChange = (e,book) => {
+    const shelf = e.target.value;
     const books = this.state.books;
     books.every((currentBook,i) => {
         if(currentBook.id === book.id){
-            books[i].shelf = e.target.value
+            books[i].shelf = shelf
             return false;
         }
         else return true;
@@ -28,6 +29,7 @@ class BooksApp extends React.Component {
     this.setState({
         books: books
     })
+    BooksAPI.update(book,shelf);
   }
   render() {
     return (
