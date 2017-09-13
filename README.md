@@ -2,7 +2,9 @@
 
 This is a Book Lending App created with React to my Nanodegree.
 
-![Alt text](https://s3.amazonaws.com/in3d-site/portfolio/myreads.png "MyReads - Main Page")
+![Alt text](https://s3.amazonaws.com/in3d-site/portfolio/myreads_mainpage.jpg "MyReads - Main Page")
+
+![Alt text](https://s3.amazonaws.com/in3d-site/portfolio/myreads_searchpage.jpg "MyReads - Search Page")
 
 To see the project working:
 
