@@ -15,18 +15,19 @@ class Search extends Component{
         
         if(query){
             BooksAPI.search(query,10).then(books => {
-                if(typeof books.map === 'function'){
+                if(!books.error){
                     this.setState({
                         searchBooks: books.map((searchBook) => {
-                            if(this.props.books
-                                .filter(propBook => propBook.id === searchBook.id)
-                                .length === 0){
-                                    return searchBook
+                          let shelfBook = this.props.books
+                              .find(propBook => propBook.id === searchBook.id);
+                            if(shelfBook){
+                                return shelfBook
                             } else{
-                                return null
+                                searchBook.shelf = 'none';
+                                return searchBook;
                             }
                         })
-                        .filter(function(e){return e})
+
                     })
                 }
             })
@@ -37,9 +38,9 @@ class Search extends Component{
         })
     }
     render() {
-        const { handleShelfChange, books } = this.props
+        const { handleShelfChange } = this.props
 
-        let showingBooks = books.concat(this.state.searchBooks);
+        let showingBooks = this.state.searchBooks;
         
         if(this.state.query){
             const match = new RegExp(escapeRegExp(this.state.query), 'i')

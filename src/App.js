@@ -18,33 +18,13 @@ class BooksApp extends React.Component {
   }
   handleShelfChange = (e,book) => {
     const shelf = e.target.value;
-    const books = this.state.books;
-
-    let foundIndex = null;
-
-    books.forEach((currentBook,index) => {
-      if(currentBook.id === book.id)
-        foundIndex = index
-    })
-
-    if(foundIndex !== null){
-      books[foundIndex].shelf = shelf
-    }
-    else{
-      BooksAPI.update(book,shelf)
-        .then(data => { this.addNewBook(book) })
-    }
-
-    this.setState({
-      books: books
-    })
-    BooksAPI.update(book,shelf);
-  }
-  addNewBook = (book) => {
-    BooksAPI.get(book.id).then(book => {
-      this.setState({
-        books: this.state.books.concat([ book ])
-      })
+    BooksAPI.update(book, shelf).then(() => {
+      if (shelf === 'none') {
+        this.setState({books: this.state.books.filter(b => b.id !== book.id)});
+      } else {
+        book.shelf = shelf;
+        this.setState({books: this.state.books.filter((b) => b.id !== book.id).concat([book])});
+      }
     })
   }
   render() {

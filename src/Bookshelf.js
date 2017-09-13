@@ -10,16 +10,20 @@ class Bookshelf extends Component{
 
         return (
             <div className="bookshelf">
-                {name && (<h2 className="bookshelf-title">{name}</h2>)}
-                <div className="bookshelf-books">
-                    <ol className="books-grid">
-                        {showingBooks.map(book => (
-                            <Book key={book.id} book={book} handleShelfChange={(e) => {
-                                handleShelfChange(e,book)
-                            }}/>
-                        ))}
-                    </ol>
-                </div>
+                {showingBooks.length > 0 && (
+                    <div>
+                        {name && (<h2 className="bookshelf-title">{name}</h2>)}
+                        <div className="bookshelf-books">
+                            <ol className="books-grid">
+                                {showingBooks.map(book => (
+                                    <Book key={book.id} book={book} handleShelfChange={(e) => {
+                                        handleShelfChange(e,book)
+                                    }}/>
+                                ))}
+                            </ol>
+                        </div>
+                    </div>
+                )}
             </div>
         )
     }

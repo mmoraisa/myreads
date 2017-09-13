@@ -12,13 +12,32 @@ body, .app {
 
 .list-books-title {
   padding: 10px 0;
-  background: #2e7c31;
+  background: radial-gradient(#47587b,#37435d);
   text-align: center;
 }
+.list-books-title::before{
+  content: 'MyReads';
+  display: inline-block;
+  position: absolute;
+  font-size: 33px;
+  margin-left: -68px;
+  color: #ffffff;
+}
+.list-books-title::after {
+  content: 'MyReads';
+  transform: rotateX(177deg);
+  position: absolute;
+  display: inline-block;
+  font-size: 34px;
+  margin-left: -71px;
+  margin-top: -29px;
+  color: transparent;
+  text-shadow: 0 0 6px rgba(0,0,0,0.15);
+}
 .list-books-title h1 {
-  font-weight: 400;
+  font-weight: 800;
   margin: 0;
-  color: white;
+  color: #798cb3;
 }
 
 .list-books-content {
@@ -53,7 +72,7 @@ body, .app {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #2e7d32;
+  background: #1b3363;
   background-image: url('./icons/add.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -147,12 +166,15 @@ body, .app {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #60ac5d;
+  background: #1b3363;
   background-image: url('./icons/arrow-drop-down.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.book-shelf-changer:hover{
+  background-color: #2D4E90;
 }
 .book-shelf-changer select {
   width: 100%;
